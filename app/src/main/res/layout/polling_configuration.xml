@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/obd_configuration_layout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/gps_settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="GPS settings"
+        android:textAlignment="center"
+        android:textSize="30sp" />
+
+    <Switch
+        android:id="@+id/gps_active_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:text="include GPS" />
+
+    <EditText
+        android:id="@+id/gps_min_interval_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="min interval in ms"
+        android:inputType="numberSigned" />
+
+    <EditText
+        android:id="@+id/gps_min_distance_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="min distance in meters"
+        android:inputType="numberSigned" />
+
+    <TextView
+        android:id="@+id/service_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="OBD Configuration"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/obd_interval_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="interval in ms"
+        android:inputType="number" />
+
+    <Button
+        android:id="@+id/start_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Start service" />
+
+</LinearLayout>
