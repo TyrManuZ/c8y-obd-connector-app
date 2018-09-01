@@ -1,60 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/connection_settings_main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/connection_settings"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Connection settings"
-        android:textAlignment="center"
-        android:textSize="30sp" />
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/c8y_uri_setting"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="MQTT endpoint"
-        android:inputType="textUri"
-        android:text="mqtt.cumulocity.com" />
+        <TextView
+            android:id="@+id/connection_settings_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Connection settings"
+            android:textAlignment="center"
+            android:textSize="30sp" />
 
-    <EditText
-        android:id="@+id/c8y_tenant_setting"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Tenant"
-        android:inputType="text" />
+        <EditText
+            android:id="@+id/c8y_uri_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="MQTT endpoint"
+            android:inputType="textUri"
+            android:text="mqtt.cumulocity.com"
+            android:textAlignment="center" />
 
-    <EditText
-        android:id="@+id/c8y_username_setting"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Username"
-        android:inputType="textPersonName" />
+        <Switch
+            android:id="@+id/c8y_ssl_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SSL"
+            android:textAlignment="viewStart" />
 
-    <EditText
-        android:id="@+id/c8y_password_setting"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <Switch
-        android:id="@+id/c8y_ssl_setting"
+            <TextView
+                android:id="@+id/tenant_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Connected to tenant:" />
+
+            <TextView
+                android:id="@+id/active_tenant_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/not_connected"
+                android:textAlignment="center" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bootstrap_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SSL" />
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="@string/bootstrap" />
 
     <Button
         android:id="@+id/next_screen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Next" />
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="@string/next" />
+
+    <TextView
+        android:id="@+id/device_id_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="Device ID"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/device_id_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
 
 </LinearLayout>

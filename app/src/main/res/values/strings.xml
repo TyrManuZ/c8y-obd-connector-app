@@ -74,4 +74,8 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="title_activity_cumulocity_settings">Cumulocity Settings</string>
+    <string name="next">Next</string>
+    <string name="not_connected">Not connected</string>
+    <string name="bootstrap">Bootstrap</string>
+    <string name="clear_credentials">Clear credentials</string>
 </resources>

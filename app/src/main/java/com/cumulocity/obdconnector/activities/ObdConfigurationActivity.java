@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.cumulocity.obdconnector.ApplicationProperties;
 import com.cumulocity.obdconnector.DisplayableBluetoothDevice;
@@ -106,8 +107,8 @@ public class ObdConfigurationActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            scanButton.setVisibility(View.GONE);
-            bluetoothDeviceSelector.setVisibility(View.GONE);
+            obdConfigurationLayout.removeView(scanButton);
+            obdConfigurationLayout.removeView(bluetoothDeviceSelector);
             obdConfigurationLayout.addView(loadingAvailableCommandsBar);
         }
 
@@ -118,26 +119,33 @@ public class ObdConfigurationActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            loadingAvailableCommandsBar.setVisibility(View.GONE);
-            supportedMessages = obdCapabilities.getAvailableMessages(result);
-            ArrayAdapter<ObdMessage>messageAdapter = new ArrayAdapter<>(getApplicationContext(), R.layout.obd_command_entry, supportedMessages);
-            availableCommands.setAdapter(messageAdapter);
-            Log.d(TAG, "Add list to view");
-            obdConfigurationLayout.addView(availableCommands);
+            if (result == null) {
+                Toast.makeText(getApplication(), "Could not connect to OBD", Toast.LENGTH_LONG).show();
+                loadingAvailableCommandsBar.setVisibility(View.GONE);
+                obdConfigurationLayout.addView(bluetoothDeviceSelector);
+                obdConfigurationLayout.addView(scanButton);
+            } else {
+                loadingAvailableCommandsBar.setVisibility(View.GONE);
+                supportedMessages = obdCapabilities.getAvailableMessages(result);
+                ArrayAdapter<ObdMessage> messageAdapter = new ArrayAdapter<>(getApplicationContext(), R.layout.obd_command_entry, supportedMessages);
+                availableCommands.setAdapter(messageAdapter);
+                Log.d(TAG, "Add list to view");
+                obdConfigurationLayout.addView(availableCommands);
 
-            nextScreenButton.setLayoutParams(layoutParams);
-            nextScreenButton.setText("Next");
-            nextScreenButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    saveObdConfiguration();
-                    Log.d(TAG, "intent for polling screen");
-                    Intent intent = new Intent(getApplicationContext(), PollingConfigurationActivity.class);
-                    startActivity(intent);
-                }
-            });
-            Log.d(TAG, "Add button to view");
-            obdConfigurationLayout.addView(nextScreenButton);
+                nextScreenButton.setLayoutParams(layoutParams);
+                nextScreenButton.setText("Next");
+                nextScreenButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        saveObdConfiguration();
+                        Log.d(TAG, "intent for polling screen");
+                        Intent intent = new Intent(getApplicationContext(), PollingConfigurationActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                Log.d(TAG, "Add button to view");
+                obdConfigurationLayout.addView(nextScreenButton);
+            }
             if (mmSocket != null) {
                 try {
                     mmSocket.close();
@@ -186,7 +194,7 @@ public class ObdConfigurationActivity extends AppCompatActivity {
                 obdCommands.selectProtocol();
                 return obdCommands.getAvailableCommands();
             } catch (IOException connectException) {
-                // Unable to connect; close the socket and return.
+                Log.w(TAG, "Cannot establish bluetooth connection");
                 try {
                     mmSocket.close();
                 } catch (IOException closeException) {

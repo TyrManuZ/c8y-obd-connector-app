@@ -25,6 +25,7 @@ import com.cumulocity.obdconnector.mqtt.CumulocityConfiguration;
 import com.cumulocity.obdconnector.GpsLocationListener;
 import com.cumulocity.obdconnector.activities.WelcomeActivity;
 import com.cumulocity.obdconnector.R;
+import com.cumulocity.obdconnector.mqtt.CumulocityConfigurationBuilder;
 import com.cumulocity.obdconnector.mqtt.MqttHelper;
 import com.cumulocity.obdconnector.mqtt.MqttMessengerService;
 
@@ -57,13 +58,13 @@ public class ObdService extends Service {
         if (intent.getAction().equals(SERVICE_START)) {
             properties = new ApplicationProperties(this);
             includeGps = properties.useGps();
-            CumulocityConfiguration cumulocityConfiguration = new CumulocityConfiguration(
-                properties.getUri(),
-                properties.getTenant(),
-                properties.getUsername(),
-                properties.getPassword(),
-                properties.useSsl()
-            );
+            CumulocityConfiguration cumulocityConfiguration = new CumulocityConfigurationBuilder()
+                    .withUri(properties.getUri())
+                    .withTenant(properties.getTenant())
+                    .withUsername(properties.getUsername())
+                    .withPassword(properties.getPassword())
+                    .withSsl(properties.useSsl())
+                    .build();
             startServiceWithNotification(
                     properties.getBluetoothDevice(),
                     properties.getObdInterval(),

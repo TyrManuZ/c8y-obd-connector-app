@@ -49,4 +49,5 @@ public class CumulocityConfiguration {
         }
         return "tcp://" + uri + ":" + MQTT_NO_SSL_PORT;
     }
+
 }
