@@ -5,13 +5,11 @@
 
 package com.cumulocity.obdconnector.obd;
 
-import android.text.TextUtils;
-import android.util.Log;
-
 import com.cumulocity.obdconnector.obd.commands.AvailablePidsCommand_61_80;
 import com.cumulocity.obdconnector.obd.commands.AvailablePidsCommand_81_A0;
 import com.github.pires.obd.commands.SpeedCommand;
 import com.github.pires.obd.commands.control.DistanceMILOnCommand;
+import com.github.pires.obd.commands.control.VinCommand;
 import com.github.pires.obd.commands.engine.OilTempCommand;
 import com.github.pires.obd.commands.engine.RPMCommand;
 import com.github.pires.obd.commands.fuel.AirFuelRatioCommand;
@@ -34,7 +32,6 @@ import com.github.pires.obd.exceptions.NoDataException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Map;
 
 public class ObdCommands {
 
@@ -75,6 +72,8 @@ public class ObdCommands {
 
     private final DistanceMILOnCommand traveledCommand;
 
+    private final VinCommand vinCommand;
+
 
     public ObdCommands(InputStream inputStream, OutputStream outputStream) {
         this.inputStream = inputStream;
@@ -104,6 +103,8 @@ public class ObdCommands {
         rpmCommand = new RPMCommand();
         speedCommand = new SpeedCommand();
         traveledCommand = new DistanceMILOnCommand();
+
+        vinCommand = new VinCommand();
     }
 
     public void echoOff() throws IOException, InterruptedException {
@@ -145,6 +146,11 @@ public class ObdCommands {
     public float getFuelLevel() throws IOException, InterruptedException {
         fuelLevelCommand.run(inputStream, outputStream);
         return fuelLevelCommand.getFuelLevel();
+    }
+
+    public String getVin() throws IOException, InterruptedException {
+        vinCommand.run(inputStream, outputStream);
+        return vinCommand.getFormattedResult();
     }
 
     public String getAvailableCommands() throws IOException, InterruptedException {

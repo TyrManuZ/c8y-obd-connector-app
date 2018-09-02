@@ -11,9 +11,10 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -26,9 +27,9 @@ import android.widget.Toast;
 
 import com.cumulocity.obdconnector.ApplicationProperties;
 import com.cumulocity.obdconnector.DisplayableBluetoothDevice;
-import com.cumulocity.obdconnector.obd.ObdCapabilityMap;
 import com.cumulocity.obdconnector.R;
 import com.cumulocity.obdconnector.messages.ObdMessage;
+import com.cumulocity.obdconnector.obd.ObdCapabilityMap;
 import com.cumulocity.obdconnector.obd.ObdCommands;
 
 import java.io.IOException;
@@ -93,7 +94,6 @@ public class ObdConfigurationActivity extends AppCompatActivity {
         private static final String TAG = "ObdCapabilitiesTask";
 
         private final ProgressBar loadingAvailableCommandsBar;
-        private final LinearLayout.LayoutParams layoutParams;
         private final LinearLayout obdConfigurationLayout;
         private final ListView availableCommands;
         private final Button nextScreenButton;
@@ -101,13 +101,11 @@ public class ObdConfigurationActivity extends AppCompatActivity {
         private List<ObdMessage> supportedMessages;
 
         protected ObdCapabilitiesTask() {
-            availableCommands = new ListView(getApplicationContext());
-            loadingAvailableCommandsBar = new ProgressBar(getApplicationContext());
-            nextScreenButton = new Button(getApplicationContext());
-            layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            loadingAvailableCommandsBar.setLayoutParams(layoutParams);
-            availableCommands.setLayoutParams(layoutParams);
             obdConfigurationLayout = findViewById(R.id.obd_configuration_layout);
+            LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
+            loadingAvailableCommandsBar = (ProgressBar) inflater.inflate(R.layout.spinning_progress_bar, obdConfigurationLayout, false);
+            availableCommands = (ListView) inflater.inflate(R.layout.obd_command_list, obdConfigurationLayout, false);
+            nextScreenButton = (Button) inflater.inflate(R.layout.next_screen_button, obdConfigurationLayout, false);
         }
 
         @Override
@@ -137,8 +135,6 @@ public class ObdConfigurationActivity extends AppCompatActivity {
                 Log.d(TAG, "Add list to view");
                 obdConfigurationLayout.addView(availableCommands);
 
-                nextScreenButton.setLayoutParams(layoutParams);
-                nextScreenButton.setText("Next");
                 nextScreenButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

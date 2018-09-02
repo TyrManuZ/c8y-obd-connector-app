@@ -10,15 +10,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/main_left_margin"
+        android:layout_marginRight="@dimen/main_right_margin"
+        android:text="Select bluetooth device"
+        android:textAlignment="center" />
+
     <Spinner
         android:id="@+id/selector_bluetooth_device"
         android:layout_width="match_parent"
-        android:layout_height="46dp" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/main_left_margin"
+        android:layout_marginRight="@dimen/main_right_margin"/>
 
     <Button
         android:id="@+id/scan_obd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/main_left_margin"
+        android:layout_marginRight="@dimen/main_right_margin"
         android:text="Scan OBD2 commands" />
 
 </LinearLayout>
